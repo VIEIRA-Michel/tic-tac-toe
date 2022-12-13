@@ -1,0 +1,81 @@
+.top-board {
+    width: 690px;
+    margin-top: 20px;
+
+    .icon-symbol,
+    .turn-information,
+    .clear-board {
+        margin: 15px;
+        font-weight: 700;
+    }
+
+    .icon-symbol {
+        .symbol {
+            font-weight: 800;
+        }
+    }
+
+    .turn-information {
+        background-color: #dbdbdb;
+        padding: 0 10px;
+        border-radius: 10px;
+    }
+
+    .clear-board {
+        height: 50px;
+        padding-bottom: 5px;
+        border-radius: 10px;
+        background-color: #8da7b2;
+        transition: .3s all ease-in-out;
+
+        button {
+            background-color: #a5bec8;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            height: 100%;
+
+            i {
+                padding: 5px 10px;
+            }
+        }
+
+        &:hover {
+            padding-bottom: 0;
+        }
+    }
+}
+
+.board-container {
+    width: 690px;
+    height: 690px;
+}
+
+.score-board {
+    width: 690px;
+
+    .win,
+    .draw,
+    .loose {
+        font-weight: 700;
+        width: 30%;
+        margin: 15px;
+        border-radius: 20px;
+
+        &-score {
+            font-weight: 900;
+        }
+    }
+
+    .win {
+        background-color: #31c4be;
+    }
+
+    .draw {
+        background-color: #a8bec9;
+    }
+
+    .loose {
+        background-color: #f2b237;
+    }
+}

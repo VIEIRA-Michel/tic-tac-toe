@@ -1,0 +1,17 @@
+.square {
+    background-color: #1f3540;
+    border-radius: 20px;
+    padding-bottom: 10px;
+    margin: 15px;
+    transition: .3s all ease-in-out;
+
+    &:hover {
+        padding-bottom: 0;
+    }
+}
+
+.btn-square {
+    cursor: pointer;
+    background-color: #5d6c74;
+    border-radius: 20px;
+}
