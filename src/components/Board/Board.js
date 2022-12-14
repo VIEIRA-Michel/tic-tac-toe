@@ -1,23 +1,6 @@
-import { useState } from "react";
 import Square from "../Square/Square";
 import './Board.scss';
-function Board() {
-
-    const [grid, setGrid] = useState([
-        { value: null, empty: true },
-        { value: null, empty: true },
-        { value: null, empty: true },
-        { value: null, empty: true },
-        { value: null, empty: true },
-        { value: null, empty: true },
-        { value: null, empty: true },
-        { value: null, empty: true },
-        { value: null, empty: true }
-    ]);
-    function isOdd(num) { return num % 2; }
-    for (let i = 0; i < 30; i++) {
-        console.log(`${i} is ` + isOdd(i));
-    }
+function Board({ squares, turn, squareIlluminate, winner, onClick }) {
     return (
         <div className="container d-flex justify-content-center align-items-center flex-column">
             <div className="top-board d-flex justify-content-sb">
@@ -26,7 +9,7 @@ function Board() {
                     <div className="symbol y">O</div>
                 </div>
                 <div className="turn-information d-flex justify-content-center align-items-center">
-                    <div>X turn</div>
+                    <div>{turn % 2 === 1 ? "X turn" : "O turn"}</div>
                 </div>
                 <div className="clear-board">
                     <button>
@@ -35,9 +18,11 @@ function Board() {
                 </div>
             </div>
             <div className="board d-flex justify-content-center align-items-center">
-                <div className="board-container d-flex flex-wrap flex-row">{grid.map((e, index) =>
-                    <Square key={index} value={e.value} empty={e.empty} id={index} />
-                )}</div>
+                <div className="board-container d-flex flex-wrap flex-row">
+                    {squares.map((e, index) =>
+                        <Square key={index} value={e.value} empty={e.empty} id={index} onClick={() => onClick(index)} winner={winner} squareIlluminate={squareIlluminate} />
+                    )}
+                </div>
             </div>
             <div className="score-board d-flex flex-fill justify-content-sb">
                 <div className="win d-flex flex-column p-10">

@@ -1,5 +1,5 @@
 .square {
-    background-color: #1f3540;
+    background-color: #0e1f29;
     border-radius: 20px;
     padding-bottom: 10px;
     margin: 15px;
@@ -8,10 +8,45 @@
     &:hover {
         padding-bottom: 0;
     }
+
+    &.symbolO {
+
+        .btn-square {
+            background-color: #f2b237;
+
+            span {
+                color: #1f3540;
+            }
+        }
+    }
+
+    &.symbolX {
+
+        .btn-square {
+            background-color: #31c4be;
+
+            span {
+                color: #1f3540;
+            }
+        }
+    }
 }
 
 .btn-square {
     cursor: pointer;
     background-color: #5d6c74;
     border-radius: 20px;
+
+    span {
+        font-size: 80px;
+        font-weight: 800;
+    }
+
+    .symbolX {
+        color: #31c4be;
+    }
+
+    .symbolO {
+        color: #f2b237;
+    }
 }
