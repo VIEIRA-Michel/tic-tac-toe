@@ -1,47 +1,67 @@
 import Square from "../Square/Square";
 import './Board.scss';
-function Board({ squares, turn, squareIlluminate, winner, onClick }) {
+import O from '../../assets/icons/o.svg';
+import X from '../../assets/icons/x.svg';
+function Board({ squares, turn, squareIlluminate, winner, onClick, clearGrid, playerOneScore, playerTwoScore, noWinner }) {
     return (
-        <div className="container d-flex justify-content-center align-items-center flex-column">
+        <div className="container central-container d-flex justify-content-sb align-items-center flex-column">
             <div className="top-board d-flex justify-content-sb">
                 <div className="icon-symbol d-flex flex-row">
-                    <div className="symbol x">X</div>
-                    <div className="symbol y">O</div>
+                    <div className="icon-symbol__x">
+                        <img src={X} alt="symbol-X" />
+                    </div>
+                    <div className="icon-symbol__o">
+                        <img src={O} alt="symbol-O" />
+                    </div>
                 </div>
                 <div className="turn-information d-flex justify-content-center align-items-center">
-                    <div>{turn % 2 === 1 ? "X turn" : "O turn"}</div>
+                    <div className="turn-information__shadow">
+                        <div className="turn-information__shadow__top-layer">
+                            {
+                                winner ? (
+                                    <span>FINISH</span>
+                                ) :
+                                    (<>
+                                        <img src={turn % 2 === 1 ? X : O} alt={turn % 2 === 1 ? "symbol-X" : "symbol-O"} />
+                                        <span>TURN</span>
+                                    </>)
+                            }
+                        </div>
+                    </div>
                 </div>
                 <div className="clear-board">
-                    <button>
-                        <i className="fa-solid fa-rotate-left"></i>
+                    <button onClick={clearGrid}>
+                        <span>
+                            RESET GRID
+                        </span>
                     </button>
                 </div>
             </div>
             <div className="board d-flex justify-content-center align-items-center">
-                <div className="board-container d-flex flex-wrap flex-row">
+                <div className="board-container d-flex justify-content-center flex-wrap flex-row">
                     {squares.map((e, index) =>
                         <Square key={index} value={e.value} empty={e.empty} id={index} onClick={() => onClick(index)} winner={winner} squareIlluminate={squareIlluminate} />
                     )}
                 </div>
             </div>
-            <div className="score-board d-flex flex-fill justify-content-sb">
-                <div className="win d-flex flex-column p-10">
-                    <div className="win-info mb-10">
+            <div className="score-board d-flex">
+                <div className="win d-flex flex-column">
+                    <div className="win-info">
                         X (YOU)
                     </div>
-                    <div className="win-score">0</div>
+                    <div className="win-score">{playerOneScore}</div>
                 </div>
-                <div className="draw d-flex flex-column p-10">
-                    <div className="draw-info mb-10">
+                <div className="draw d-flex flex-column">
+                    <div className="draw-info">
                         DRAW
                     </div>
-                    <div className="draw-score">0</div>
+                    <div className="draw-score">{noWinner}</div>
                 </div>
-                <div className="loose d-flex flex-column p-10">
-                    <div className="loose-info mb-10">
+                <div className="loose d-flex flex-column">
+                    <div className="loose-info">
                         O (CPU)
                     </div>
-                    <div className="loose-score">0</div>
+                    <div className="loose-score">{playerTwoScore}</div>
                 </div>
             </div>
         </div>

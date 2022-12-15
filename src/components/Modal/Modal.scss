@@ -48,6 +48,32 @@
     }
 }
 
+.modal-body {
+    &.O {
+        color: #cc8b13;
+
+        img {
+            filter: invert(73%) sepia(28%) saturate(1189%) hue-rotate(347deg) brightness(104%) contrast(90%);
+        }
+    }
+
+    &.X {
+        color: #31c4be;
+
+        img {
+            filter: invert(68%) sepia(36%) saturate(784%) hue-rotate(129deg) brightness(92%) contrast(86%);
+        }
+    }
+
+    &.NOBODY {
+        color: #6a8a97;
+    }
+
+    img {
+        height: 50px;
+        margin-right: 15px;
+    }
+}
 
 .modal-button {
     &__leave {
@@ -57,11 +83,19 @@
         border: none;
         border-radius: 10px;
         cursor: pointer;
+        transition: .3s all ease-in-out;
 
         span {
             background-color: #a8bec9;
             border-radius: 10px;
             padding: 10px;
+            font-weight: 700;
+        }
+
+        &:hover {
+            padding: 10px 0 10px 0;
+            transform: translateY(5px);
+            transition: .3s all ease-in-out;
         }
     }
 
@@ -72,11 +106,18 @@
         border: none;
         border-radius: 10px;
         cursor: pointer;
+        transition: .3s all ease-in-out;
 
         span {
             background-color: #f2b237;
             border-radius: 10px;
             padding: 10px;
+        }
+
+        &:hover {
+            padding: 10px 0 10px 0;
+            transform: translateY(5px);
+            transition: .3s all ease-in-out;
         }
     }
 }
