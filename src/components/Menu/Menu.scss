@@ -1,0 +1,45 @@
+.container {
+    &__top {
+        &__icon {
+            &__x {}
+
+            &__o {}
+        }
+    }
+
+    &__body {
+        &__shadow {
+            &__top-layer {
+                &__title {
+                    span {}
+                }
+
+                &__choice {
+                    &__x {
+                        img {}
+                    }
+
+                    &__o {
+                        img {}
+                    }
+                }
+
+                &__message {
+                    span {}
+                }
+            }
+        }
+    }
+
+    &__bottom {
+        &__button {
+            &__cpu {
+                span {}
+            }
+
+            &__player {
+                span {}
+            }
+        }
+    }
+}
