@@ -2,6 +2,8 @@ import { createPortal } from "react-dom";
 import './Modal.scss';
 import O from '../../assets/icons/o.svg';
 import X from '../../assets/icons/x.svg';
+import { Link } from 'react-router-dom';
+
 function Modal({ isShowing, hide, winner, continuePlaying }) {
     function nextRound() {
         hide();
@@ -25,7 +27,7 @@ function Modal({ isShowing, hide, winner, continuePlaying }) {
                                 }
                                 <span>TAKES THE ROUND</span></div>
                             <div className="modal-button">
-                                <button type="button" className="modal-button__leave"><span>QUIT</span></button>
+                                <button type="button" className="modal-button__leave"><Link to={'/'}><span>QUIT</span></Link></button>
                                 <button type="button" className="modal-button__continue" onClick={nextRound}><span>NEXT ROUND</span></button>
                             </div>
                         </div>

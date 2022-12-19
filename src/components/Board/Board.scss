@@ -21,6 +21,7 @@
     }
 
     .icon-symbol {
+        cursor: pointer;
 
         &__x {
             filter: invert(68%) sepia(36%) saturate(784%) hue-rotate(129deg) brightness(92%) contrast(86%);
