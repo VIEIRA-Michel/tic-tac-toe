@@ -49,12 +49,12 @@ function Menu() {
                 <div className="container__bottom__button d-flex justify-content-se flex-column">
                     <div className="container__bottom__button__cpu">
                         <div className='container__bottom__button__cpu__top-layer d-flex justify-content-center align-items-center'>
-                            <Link to={'/game'} state={{ symbolPlayer, symbolOpponent, playWithCpu: true }}><span>NEW GAME (VS CPU)</span></Link>
+                            <Link to={'/solo'} state={{ symbolPlayer, symbolOpponent, playWithCpu: true }}><span>NEW GAME (VS CPU)</span></Link>
                         </div>
                     </div>
                     <div className="container__bottom__button__player">
                         <div className='container__bottom__button__player__top-layer d-flex justify-content-center align-items-center'>
-                            <Link to={'/game'} state={{ symbolPlayer, symbolOpponent, playWithCpu: false }}><span>NEW GAME (VS PLAYER)</span></Link>
+                            <Link to={'/multiplayer'} state={{ symbolPlayer, symbolOpponent, playWithCpu: false }}><span>NEW GAME (VS PLAYER)</span></Link>
                         </div>
                     </div>
                 </div>

@@ -4,7 +4,7 @@ import O from '../../assets/icons/o.svg';
 import X from '../../assets/icons/x.svg';
 import { Link } from 'react-router-dom';
 
-function Modal({ isShowing, hide, winner, continuePlaying }) {
+function Modal({ isShowing, hide, winner, continuePlaying, symbolPlayer, symbolOpponent, playWithCpu }) {
     function nextRound() {
         hide();
         continuePlaying();
@@ -17,7 +17,7 @@ function Modal({ isShowing, hide, winner, continuePlaying }) {
                     <div className="modal-wrapper">
                         <div className="modal d-flex justify-content-center align-items-center flex-column">
                             <div className="modal-header">
-                                <h4>{winner === "X" ? "YOU WON!" : winner === "O" ? "YOU LOOSE!" : "DRAW"}</h4> {/* if 2 players mod change this */}
+                                <h4>{winner === symbolPlayer ? "YOU WON!" : winner === symbolOpponent && playWithCpu ? "YOU LOOSE!" : winner === symbolOpponent && !playWithCpu ? "PLAYER 2 WIN" : "DRAW"}</h4>
                             </div>
                             <div className={`modal-body d-flex justify-content-center align-items-center ${winner}`}>
                                 {winner === "O" || winner === "X" ?

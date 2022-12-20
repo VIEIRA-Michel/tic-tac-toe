@@ -48,7 +48,6 @@ function Game() {
     const [playerOneScore, setPlayerOneScore] = useState(initialState.playerOneScore);
     const [playerTwoScore, setPlayerTwoScore] = useState(initialState.playerTwoScore);
     const [noWinner, setNoWinner] = useState(initialState.noWinner);
-
     const location = useLocation();
     const { symbolPlayer, symbolOpponent, playWithCpu } = location.state;
     function isOdd(num) { return num % 2; }
@@ -62,9 +61,11 @@ function Game() {
                     if (isOdd(turn) === 1) {
                         element.value = "X";
                         setSquareX([...squareX, id]);
+                        console.log(squareX);
                     } else {
                         element.value = "O";
                         setSquareO([...squareO, id]);
+                        console.log(squareO);
                     }
                     element.empty = false;
                 }
@@ -73,6 +74,7 @@ function Game() {
             setGrid(tmpGrid);
             setTurn(turn + 1);
         }
+        calculateWinner();
     };
 
     function nextRound() {
@@ -98,47 +100,12 @@ function Game() {
         setTurn(initialState.turn);
     }
 
-
-
-    useEffect(() => {
-        if (playWithCpu && !winner) {
-            console.log("play with cpu")
-            if (turn === grid.length && calculateWinner("O", squareO) === false & calculateWinner("X", squareX) === false) {
-                setWinner("NOBODY");
-                toggle()
-            } else {
-                if (symbolOpponent === "O") {
-                    if (isOdd(turn) === 0 && calculateWinner("X", squareX) === false) {
-                        if (turn === 0) {
-                            let random = Math.floor(Math.random() * 9);
-                            nextTurn(random);
-                        } else {
-                            let idToPlay = analyze(symbolPlayer);
-                            setTimeout(() => {
-                                nextTurn(idToPlay);
-                            }
-                                , 500)
-                        }
-                    }
-                } else {
-                    if (isOdd(turn) === 1 && calculateWinner("O", squareO) === false) {
-                        let idToPlay = analyze(symbolPlayer);
-                        setTimeout(() => {
-                            nextTurn(idToPlay);
-                        }
-                            , 500)
-                    }
-                }
-            }
-        }
-        // eslint-disable-next-line
-    }, [winner, turn, squareO, squareX])
-
-    function calculateWinner(player, checkingArray) {
+    function calculateWinner() {
         for (let i = 0; i < linesWinning.length; i++) {
             const [a, b, c] = linesWinning[i];
 
-            if (checkingArray.includes(a) && checkingArray.includes(b) && checkingArray.includes(c)) {
+            if ((grid[a].value === grid[b].value && grid[b].value === grid[c].value) && (grid[a].value !== null && grid[b].value !== null && grid[c].value !== null)) {
+                let player = grid[a].value;
                 setSquareIlluminate([a, b, c]);
                 setWinner(player);
                 toggle();
@@ -148,18 +115,9 @@ function Game() {
         return false;
     }
 
-    // let arr = [
-    //     { id: 0, count: 0 },
-    //     { id: 1, count: 0 },
-    //     { id: 2, count: 0 },
-    //     { id: 3, count: 0 },
-    //     { id: 4, count: 0 },
-    //     { id: 5, count: 0 },
-    //     { id: 6, count: 0 },
-    //     { id: 7, count: 0 },
-    //     { id: 8, count: 0 }
-    // ]
 
+
+    // quand c'est moi qui gagne sa marche mais pas quand c'est l'ordinateur
     function analyze(symbolPlayer) {
         let arrayToAnalyze;
         let arrayCpu;
@@ -175,13 +133,7 @@ function Game() {
         for (let i = 0; i < linesWinning.length; i++) {
             const [a, b, c] = linesWinning[i];
 
-            if (arrayToAnalyze.includes(a) && arrayToAnalyze.includes(b) && grid.find((element, index) => index === c && element.value === null)) {
-                idToPlay = c;
-            } else if (arrayToAnalyze.includes(a) && arrayToAnalyze.includes(c) && grid.find((element, index) => index === b && element.value === null)) {
-                idToPlay = b;
-            } else if (arrayToAnalyze.includes(b) && arrayToAnalyze.includes(c) && grid.find((element, index) => index === a && element.value === null)) {
-                idToPlay = a;
-            } else if (arrayToAnalyze.includes(a) && grid.find((element, index) => index === b && element.value === null)) {
+            if (arrayToAnalyze.includes(a) && grid.find((element, index) => index === b && element.value === null)) {
                 idToPlay = b;
             } else if (arrayToAnalyze.includes(a) && grid.find((element, index) => index === c && element.value === null)) {
                 idToPlay = c;
@@ -195,44 +147,71 @@ function Game() {
                 idToPlay = b;
             }
         }
+
+        for (let i = 0; i < linesWinning.length; i++) {
+            const [a, b, c] = linesWinning[i];
+
+            if (arrayToAnalyze.includes(a) && arrayToAnalyze.includes(b) && grid.find((element, index) => index === c && element.value === null)) {
+                idToPlay = c;
+            } else if (arrayToAnalyze.includes(a) && arrayToAnalyze.includes(c) && grid.find((element, index) => index === b && element.value === null)) {
+                idToPlay = b;
+            } else if (arrayToAnalyze.includes(b) && arrayToAnalyze.includes(c) && grid.find((element, index) => index === a && element.value === null)) {
+                idToPlay = a;
+            }
+        }
+
+        for (let i = 0; i < linesWinning.length; i++) {
+            const [a, b, c] = linesWinning[i];
+
+            if (arrayCpu.includes(a) && arrayCpu.includes(b) && grid.find((element, index) => index === c && element.value === null)) {
+                idToPlay = c;
+            } else if (arrayCpu.includes(a) && arrayCpu.includes(c) && grid.find((element, index) => index === b && element.value === null)) {
+                idToPlay = b;
+            } else if (arrayCpu.includes(b) && arrayCpu.includes(c) && grid.find((element, index) => index === a && element.value === null)) {
+                idToPlay = a;
+            }
+        }
         return idToPlay;
     }
 
-
-
-    // for (let i = 0; i < linesWinning.length; i++) {
-    //     for (let j = 0; j < linesWinning[i].length; j++) {
-    //         arr[linesWinning[i][j]].count++
-    //     }
-    // }
-
-    // function compare(a, b) {
-    //     let indexOfA = arr.indexOf(a);
-    //     let indexOfB = arr.indexOf(b);
-
-    //     if (a.count < b.count) {
-    //         if (indexOfA < indexOfB) {
-    //             arr.splice(indexOfB, 1);
-    //             arr.splice(indexOfA, 0, b)
-    //         }
-    //     }
-    //     if (a.count > b.count) {
-    //         if (indexOfA > indexOfB) {
-    //             arr.splice(indexOfA, 1);
-    //             arr.splice(indexOfB, 0, a)
-    //         }
-    //     }
-    // }
-
-    // for (let i = 0; i < arr.length; i++) {
-    //     for (let j = arr.length - 1; j > 0; j--) {
-    //         compare(arr[i], arr[j])
-    //     }
-    // }
+    useEffect(() => {
+        console.log(grid);
+        if (playWithCpu && !winner) {
+            if (turn === grid.length) {
+                console.log('holy shit');
+                setWinner("NOBODY");
+                toggle()
+            } else {
+                if (symbolOpponent === "O") {
+                    if (isOdd(turn) === 0) {
+                        if (turn === 0) {
+                            let random = Math.floor(Math.random() * 9);
+                            nextTurn(random);
+                        } else {
+                            let idToPlay = analyze(symbolPlayer);
+                            setTimeout(() => {
+                                nextTurn(idToPlay);
+                            }
+                                , 500)
+                        }
+                    }
+                } else {
+                    if (isOdd(turn) === 1) {
+                        let idToPlay = analyze(symbolPlayer);
+                        setTimeout(() => {
+                            nextTurn(idToPlay);
+                        }
+                            , 500)
+                    }
+                }
+            }
+        }
+        // eslint-disable-next-line
+    }, [grid, winner, turn, squareO, squareX])
     return (
         <>
-            <Board squares={grid} turn={turn} squareIlluminate={squareIlluminate} winner={winner} onClick={nextTurn} clearGrid={clearGrid} playerOneScore={playerOneScore} playerTwoScore={playerTwoScore} noWinner={noWinner} />
-            <Modal isShowing={isShowing} hide={toggle} winner={winner} continuePlaying={nextRound} />
+            <Board squares={grid} turn={turn} squareIlluminate={squareIlluminate} winner={winner} onClick={nextTurn} clearGrid={clearGrid} playerOneScore={playerOneScore} playerTwoScore={playerTwoScore} noWinner={noWinner} symbolPlayer={symbolPlayer} symbolOpponent={symbolOpponent} playWithCpu={playWithCpu} />
+            <Modal isShowing={isShowing} hide={toggle} winner={winner} continuePlaying={nextRound} symbolPlayer={symbolPlayer} symbolOpponent={symbolOpponent} playWithCpu={playWithCpu} />
         </>
     )
 }

@@ -3,7 +3,7 @@ import './Board.scss';
 import O from '../../assets/icons/o.svg';
 import X from '../../assets/icons/x.svg';
 import { Link } from "react-router-dom";
-function Board({ squares, turn, squareIlluminate, winner, onClick, clearGrid, playerOneScore, playerTwoScore, noWinner }) {
+function Board({ squares, turn, squareIlluminate, winner, onClick, clearGrid, playerOneScore, playerTwoScore, noWinner, symbolPlayer, symbolOpponent, playWithCpu }) {
     return (
         <div className="container central-container d-flex justify-content-sb align-items-center flex-column">
             <div className="top-board d-flex justify-content-sb">
@@ -23,7 +23,7 @@ function Board({ squares, turn, squareIlluminate, winner, onClick, clearGrid, pl
                                     <span>FINISH</span>
                                 ) :
                                     (<>
-                                        <img src={turn % 2 === 1 ? O : X} alt={turn % 2 === 1 ? "symbol-O" : "symbol-X"} />
+                                        <img src={turn % 2 === 1 ? X : O} alt={turn % 2 === 1 ? "symbol-X" : "symbol-O"} />
                                         <span>TURN</span>
                                     </>)
                             }
@@ -48,7 +48,7 @@ function Board({ squares, turn, squareIlluminate, winner, onClick, clearGrid, pl
             <div className="score-board d-flex">
                 <div className="win d-flex flex-column">
                     <div className="win-info">
-                        X (YOU)
+                        X {symbolPlayer === "X" ? "(YOU)" : symbolOpponent === "X" && playWithCpu === false ? "(PLAYER 2)" : "(CPU)"}
                     </div>
                     <div className="win-score">{playerOneScore}</div>
                 </div>
@@ -60,7 +60,7 @@ function Board({ squares, turn, squareIlluminate, winner, onClick, clearGrid, pl
                 </div>
                 <div className="loose d-flex flex-column">
                     <div className="loose-info">
-                        O (CPU)
+                        O {symbolPlayer === "O" ? "(YOU)" : symbolOpponent === "O" && playWithCpu === false ? "(PLAYER 2)" : "(CPU)"}
                     </div>
                     <div className="loose-score">{playerTwoScore}</div>
                 </div>
