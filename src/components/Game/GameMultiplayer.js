@@ -25,6 +25,9 @@ function Game() {
         playerOneScore: 0,
         playerTwoScore: 0,
         noWinner: 0,
+        symbolPlayer: 'O',
+        symbolOpponent: 'X',
+        playWithCpu: false,
     }
 
     const linesWinning = [
@@ -49,7 +52,8 @@ function Game() {
     const [playerTwoScore, setPlayerTwoScore] = useState(initialState.playerTwoScore);
     const [noWinner, setNoWinner] = useState(initialState.noWinner);
     const location = useLocation();
-    const { symbolPlayer, symbolOpponent, playWithCpu } = location.state;
+    const { symbolPlayer, symbolOpponent, playWithCpu } = location.state ? location.state : initialState;
+
 
     function isOdd(num) { return num % 2; }
 
@@ -112,7 +116,6 @@ function Game() {
     }
 
     useEffect(() => {
-        console.log(turn);
         if (squareX.length >= 3 || squareO.length >= 3) {
             if (isOdd(turn) === 1) {
                 calculateWinner("O", squareO);

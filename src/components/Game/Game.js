@@ -25,6 +25,9 @@ function Game() {
         playerOneScore: 0,
         playerTwoScore: 0,
         noWinner: 0,
+        symbolPlayer: 'O',
+        symbolOpponent: 'X',
+        playWithCpu: true,
     }
 
     const linesWinning = [
@@ -49,9 +52,8 @@ function Game() {
     const [playerTwoScore, setPlayerTwoScore] = useState(initialState.playerTwoScore);
     const [noWinner, setNoWinner] = useState(initialState.noWinner);
     const location = useLocation();
-    const { symbolPlayer, symbolOpponent, playWithCpu } = location.state;
+    const { symbolPlayer, symbolOpponent, playWithCpu } = location.state ? location.state : initialState;
     function isOdd(num) { return num % 2; }
-
 
     function nextTurn(id) {
         let tmpGrid = grid;
@@ -61,11 +63,9 @@ function Game() {
                     if (isOdd(turn) === 1) {
                         element.value = "X";
                         setSquareX([...squareX, id]);
-                        console.log(squareX);
                     } else {
                         element.value = "O";
                         setSquareO([...squareO, id]);
-                        console.log(squareO);
                     }
                     element.empty = false;
                 }
@@ -175,10 +175,8 @@ function Game() {
     }
 
     useEffect(() => {
-        console.log(grid);
         if (playWithCpu && !winner) {
             if (turn === grid.length) {
-                console.log('holy shit');
                 setWinner("NOBODY");
                 toggle()
             } else {
@@ -208,12 +206,14 @@ function Game() {
         }
         // eslint-disable-next-line
     }, [grid, winner, turn, squareO, squareX])
+
     return (
         <>
             <Board squares={grid} turn={turn} squareIlluminate={squareIlluminate} winner={winner} onClick={nextTurn} clearGrid={clearGrid} playerOneScore={playerOneScore} playerTwoScore={playerTwoScore} noWinner={noWinner} symbolPlayer={symbolPlayer} symbolOpponent={symbolOpponent} playWithCpu={playWithCpu} />
             <Modal isShowing={isShowing} hide={toggle} winner={winner} continuePlaying={nextRound} symbolPlayer={symbolPlayer} symbolOpponent={symbolOpponent} playWithCpu={playWithCpu} />
         </>
     )
+
 }
 
 export default Game;
